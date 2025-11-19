@@ -128,7 +128,52 @@ def sync_docs(force: bool = False, preserve: bool = False, repo_path: str = None
     else:
         print("")
         
+    # Generate versions.json
+    generate_versions_json(main_repo_path, docs_target)
+        
     return True
+
+
+def get_project_version(repo_path: Path) -> str:
+    """Read version from pyproject.toml."""
+    pyproject_path = repo_path / "pyproject.toml"
+    if not pyproject_path.exists():
+        print(f"Warning: pyproject.toml not found at {pyproject_path}")
+        return "dev"
+    
+    try:
+        with open(pyproject_path, "r") as f:
+            for line in f:
+                if line.startswith("version = "):
+                    return line.split("=")[1].strip().strip('"').strip("'")
+    except Exception as e:
+        print(f"Warning: Failed to read version from pyproject.toml: {e}")
+        
+    return "dev"
+
+
+def generate_versions_json(repo_path: Path, target_dir: Path):
+    """Generate versions.json file."""
+    version = get_project_version(repo_path)
+    
+    # Create a simple versions.json for local dev/mike compatibility
+    # In a real mike setup, this file is managed by mike, but for local dev
+    # we need it to exist to avoid 404s if the theme expects it.
+    import json
+    
+    versions_data = [
+        {
+            "version": version,
+            "title": version,
+            "aliases": ["latest"]
+        }
+    ]
+    
+    versions_file = target_dir / "versions.json"
+    with open(versions_file, "w") as f:
+        json.dump(versions_data, f, indent=2)
+    
+    print(f"Generated versions.json with version: {version}")
 
 
 if __name__ == "__main__":

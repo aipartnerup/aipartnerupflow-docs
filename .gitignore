@@ -4,9 +4,11 @@ site/
 
 # Documentation (synced from main repository)
 # Note: Website-specific files (index.md, getting-started/) are kept in version control
-docs/
+docs/*
 # Exclude website-specific files from ignore
 !docs/index.md
+!docs/assets/
+!docs/versions.json
 
 # Python
 __pycache__/
