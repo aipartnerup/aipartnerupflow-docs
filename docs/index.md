@@ -1,106 +1,56 @@
-# aipartnerupflow
+# Documentation Index
 
-**Task Orchestration and Execution Framework**
-
-Welcome to the aipartnerupflow documentation! This framework provides a unified task orchestration system that supports execution of multiple task types, from traditional API calls to LLM-based agent crews.
-
-## What is aipartnerupflow?
-
-aipartnerupflow is a **task orchestration and execution framework** designed to:
-
-- **Orchestrate tasks**: Manage complex task trees with dependencies and priorities
-- **Unified execution**: Support multiple task types through a single interface
-- **Flexible architecture**: Core orchestration with optional LLM support via CrewAI
-- **Production-ready**: Built-in storage, streaming, and A2A Protocol support
-
-## Core Principles
-
-### Pure Orchestration Core
-
-The core of aipartnerupflow is **pure orchestration** with no LLM dependencies:
-
-- Task orchestration specifications (TaskManager)
-- Core interfaces (ExecutableTask, BaseTask, TaskStorage)
-- Storage (DuckDB default, PostgreSQL optional)
-- **NO CrewAI dependency** (available via `[crewai]` extra)
-
-### Optional Features
-
-- **[crewai]**: LLM-based agent crews via CrewManager
-- **[a2a]**: A2A Protocol Server for agent-to-agent communication
-- **[cli]**: Command-line interface tools
-- **[postgres]**: PostgreSQL storage support
-
-## Quick Start
-
-### Installation
-
-```bash
-# Core library (pure orchestration)
-pip install aipartnerupflow
-
-# With CrewAI support
-pip install aipartnerupflow[crewai]
-
-# Everything
-pip install aipartnerupflow[all]
-```
-
-### Basic Usage
-
-```python
-from aipartnerupflow import TaskManager, TaskTreeNode, create_session
-
-# Create database session and task manager
-db = create_session()
-task_manager = TaskManager(db)
-
-# Create and execute tasks
-root_task = await task_manager.task_repository.create_task(
-    name="root_task",
-    user_id="user_123",
-    priority=2
-)
-
-task_tree = TaskTreeNode(root_task)
-result = await task_manager.distribute_task_tree(task_tree)
-```
+This directory contains detailed documentation for the aipartnerupflow project.
 
 ## Documentation Structure
 
-- **[Getting Started](getting-started/installation.md)**: Installation and quick start guides
-- **[User Guide](user-guide/overview.md)**: How to use aipartnerupflow
-- **[Architecture](architecture/overview.md)**: System design and architecture
-- **[Development](development/development.md)**: Contributing and development guides
-- **[API Reference](api/core.md)**: API documentation
+### Getting Started
+- **[Quick Start](getting-started/quick-start.md)** - 5-minute quick start guide
 
-## Key Features
+### User Documentation
+- **Main README**: See [../README.md](../README.md) - User guide and quick start
 
-### Task Orchestration
+### Guides
+- **[Task Orchestration](guides/task-orchestration.md)** - Complete guide to task orchestration, dependencies, and priorities
+- **[Custom Tasks](guides/custom-tasks.md)** - Guide to creating custom tasks with ExecutableTask interface
+- **[CLI](guides/cli.md)** - Complete CLI usage guide
+- **[API Server](guides/api-server.md)** - API server setup and usage guide
 
-- **TaskManager**: Task tree orchestration, dependency management, priority scheduling
-- **Unified Execution**: All task types unified through the `ExecutableTask` interface
-- **Storage**: Task state persistence (DuckDB/PostgreSQL)
+### API Reference
+- **[Python API](api/python.md)** - Core Python library API reference (TaskManager, ExecutableTask, TaskTreeNode, etc.)
+- **[HTTP API](api/http.md)** - A2A Protocol Server HTTP API reference
 
-### Task Execution Types
+### Architecture & Design
+- **[Architecture Overview](architecture/overview.md)** - System architecture and design principles
+- **[Directory Structure](architecture/directory-structure.md)** - Directory structure and naming conventions
+- **[Naming Convention](architecture/naming-convention.md)** - Naming conventions for extensions
+- **[Extension Registry Design](architecture/extension-registry-design.md)** - Extension registry design (Protocol-based architecture)
 
-- **Custom Tasks**: Implement `ExecutableTask` for your own task types
-- **CrewManager**: LLM-based task execution via CrewAI
-- **BatchManager**: Batch orchestration container for multiple crews
+### Development
+- **[Setup](development/setup.md)** - Development guide for contributors
+- **[Extending](development/extending.md)** - Guide for extending the framework (custom executors, extensions, hooks)
+- **[Contributing](development/contributing.md)** - Contribution guidelines and process
+- **[Design Documents](development/design/)** - Design documents for specific features
 
-### Protocol Support
+### Examples
+- **[Basic Task](examples/basic_task.md)** - Basic task examples and common patterns
+- **[Task Tree](examples/task-tree.md)** - Task tree examples with dependencies and priorities
 
-- **A2A Protocol**: Standard protocol for agent-to-agent communication
-- **Streaming**: Real-time progress updates via SSE/WebSocket
-- **Multiple Transports**: HTTP, SSE, WebSocket support
+### Architecture
+- **[Directory Structure](architecture/directory-structure.md)** - Directory structure and naming conventions
+- **[Naming Convention](architecture/naming-convention.md)** - Naming conventions for extensions
+- **[Extension Registry Design](architecture/extension-registry-design.md)** - Extension registry design (Protocol-based architecture)
+- **[Configuration](architecture/configuration.md)** - Database table configuration
 
-## Resources
+## Quick Links
 
-- **GitHub**: [aipartnerup/aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow)
-- **PyPI**: [aipartnerupflow](https://pypi.org/project/aipartnerupflow/)
-- **Website**: [aipartnerup.com](https://aipartnerup.com)
-
-## License
-
-Apache-2.0
+- **Getting Started**: [quick-start.md](getting-started/quick-start.md) or [README.md](../README.md)
+- **Task Orchestration**: [guides/task-orchestration.md](guides/task-orchestration.md)
+- **Custom Tasks**: [guides/custom-tasks.md](guides/custom-tasks.md)
+- **Python API Reference**: [api/python.md](api/python.md)
+- **HTTP API Reference**: [api/http.md](api/http.md)
+- **Architecture Overview**: [architecture/overview.md](architecture/overview.md)
+- **Development Setup**: [development/setup.md](development/setup.md)
+- **Extending the Framework**: [development/extending.md](development/extending.md)
+- **Examples**: [examples/basic_task.md](examples/basic_task.md)
 

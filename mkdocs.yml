@@ -44,6 +44,7 @@ theme:
 # Plugins
 plugins:
   - search
+  - awesome-pages
   - minify:
       minify_html: true
 
@@ -71,29 +72,7 @@ markdown_extensions:
   - toc:
       permalink: true
 
-# Navigation
-nav:
-  - Home: index.md
-  - Getting Started:
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quick-start.md
-    - Examples: getting-started/examples.md
-  - User Guide:
-    - CLI Usage: usage/cli-usage.md
-  - Architecture:
-    - Architecture Overview: architecture/architecture.md
-    - Directory Structure: architecture/directory-structure.md
-    - Extension Registry: architecture/extension-registry-design.md
-    - Naming Conventions: architecture/naming-convention.md
-  - Development:
-    - Development Guide: development/development.md
-    - CLI Design: development/cli-design.md
-    - Aggregate Results Design: development/aggregate-results-design.md
-  - Configuration:
-    - Table Configuration: configuration/table-configuration.md
-  - Planning:
-    - Implementation Plan: planning/implementation-plan.md
-    - CLI Design (Planning): planning/cli-design.md
+
 
 # Extra
 extra:

@@ -19,7 +19,7 @@ These files are automatically synced from `aipartnerupflow/docs/` during CI/CD d
 - `docs/configuration/` - Configuration documentation
 - `docs/planning/` - Planning documents
 - `docs/usage/` - Usage guides
-- `docs/README.md` - Documentation index
+- `docs/index.md` - Documentation index (note: website's `docs/index.md` is homepage, preserved during sync)
 - `docs/STRUCTURE.md` - Documentation structure
 
 **These files are NOT committed to the documentation repository** (ignored by `.gitignore`).

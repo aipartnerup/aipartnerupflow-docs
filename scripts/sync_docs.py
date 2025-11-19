@@ -11,20 +11,18 @@ import shutil
 import argparse
 import subprocess
 import tempfile
+import tempfile
 from pathlib import Path
+
+try:
+    import clean_docs
+except ImportError:
+    # Fallback for when running as a module or from different CWD
+    from scripts import clean_docs
 
 # Configuration
 DOCS_SOURCE_REL = Path("../aipartnerupflow/docs")
 DOCS_TARGET = Path("docs")
-
-# Files that are specific to the website and should not be overwritten
-# when syncing from the main repository (unless --force is used)
-WEBSITE_SPECIFIC_FILES = {
-    "index.md",
-    "assets/logo.png",
-    "assets/favicon.ico",
-    "versions.json",
-}
 
 
 def should_exclude(path: Path) -> bool:
@@ -35,18 +33,10 @@ def should_exclude(path: Path) -> bool:
     # Exclude __pycache__
     if path.name == "__pycache__":
         return True
-    return False
-
-
-def is_website_specific(rel_path: Path) -> bool:
-    """Check if a file is website-specific."""
-    path_str = str(rel_path)
-    if path_str in WEBSITE_SPECIFIC_FILES:
+    # Exclude README.md (legacy, now renamed to index.md)
+    if path.name == "README.md":
         return True
-    # Also check if it's in a website-specific directory
-    for specific in WEBSITE_SPECIFIC_FILES:
-        if specific.endswith("/") and path_str.startswith(specific):
-            return True
+    # Note: index.md in root docs/ is handled by website-specific file preservation
     return False
 
 
@@ -99,7 +89,7 @@ def sync_docs(force: bool = False, preserve: bool = False, repo_path: str = None
             rel_path = Path(root).relative_to(source_path)
             
             # Skip website-specific files if preserve is True
-            if preserve and is_website_specific(rel_path):
+            if preserve and clean_docs.is_website_specific(rel_path):
                 continue
 
             target_dir = DOCS_TARGET / rel_path
@@ -113,7 +103,7 @@ def sync_docs(force: bool = False, preserve: bool = False, repo_path: str = None
                 file_rel_path = rel_path / file
                 
                 # Skip website-specific files if preserve is True
-                if preserve and is_website_specific(file_rel_path):
+                if preserve and clean_docs.is_website_specific(file_rel_path):
                     skipped_count += 1
                     continue
 
@@ -192,9 +182,10 @@ def generate_versions_json(repo_path: Path, target_dir: Path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sync documentation files.")
-    parser.add_argument("--ci", action="store_true", help="Run in CI mode (implies --force and --preserve, uses MAIN_REPO_PATH env var)")
+    parser.add_argument("--ci", action="store_true", help="Run in CI mode (implies --force, --preserve, and --clean, uses MAIN_REPO_PATH env var)")
     parser.add_argument("--force", action="store_true", help="Force copy all files regardless of timestamps")
     parser.add_argument("--preserve", action="store_true", help="Preserve website-specific files (do not overwrite from source)")
+    parser.add_argument("--clean", action="store_true", help="Clean docs directory before syncing (preserves website-specific files)")
     parser.add_argument("--path", help="Path to the main repository", default=None)
     DEFAULT_GIT_URL = "https://github.com/aipartnerup/aipartnerupflow.git"
     parser.add_argument("--git-url", nargs="?", const=DEFAULT_GIT_URL, help=f"URL of the git repository to clone (default if flag used: {DEFAULT_GIT_URL})")
@@ -204,12 +195,17 @@ if __name__ == "__main__":
     
     force = args.force
     preserve = args.preserve
+    clean = args.clean
     repo_path = args.path
     
     if args.ci:
         force = True
         preserve = True
+        clean = True
         if not repo_path:
             repo_path = os.getenv("MAIN_REPO_PATH")
+            
+    if clean:
+        clean_docs.clean_docs()
             
     sync_docs(force=force, preserve=preserve, repo_path=repo_path, git_url=args.git_url, git_branch=args.git_branch)
