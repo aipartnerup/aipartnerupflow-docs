@@ -1,0 +1,35 @@
+# MkDocs
+site/
+.cache/
+
+# Documentation (synced from main repository)
+# Note: Website-specific files (index.md, getting-started/) are kept in version control
+docs/
+# Exclude website-specific files from ignore
+!docs/index.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
