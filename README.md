@@ -6,97 +6,113 @@ This repository contains the documentation website for [aipartnerupflow](https:/
 
 This is a standalone documentation project that serves the developer documentation for the aipartnerupflow library. The documentation source files are maintained in the main [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow) repository under the `docs/` directory.
 
-## Setup
+## Quick Start
 
-### Prerequisites
+Choose one of the following methods to run the documentation locally.
 
+### Option 1: Docker (Recommended)
+
+**Prerequisites:**
+- Docker
+- Docker Compose
+
+**Start the server:**
+
+```bash
+docker-compose up
+```
+
+The documentation will be available at `http://localhost:8000`.
+
+### Option 2: Local Development
+
+**Prerequisites:**
 - Python 3.10 or higher (3.12+ recommended)
 - pip
 
-### Quick Setup
+**1. Setup:**
 
-Use the setup script for automatic setup:
+Use the setup script to create a virtual environment and install dependencies:
 
 ```bash
-git clone https://github.com/aipartnerup/aipartnerupflow-docs.git
-cd aipartnerupflow-docs
 ./scripts/setup.sh
 ```
 
+**2. Start the server:**
+
+Use the start script to launch the development server:
+
+```bash
+./scripts/start.sh
+```
+
+The documentation will be available at `http://localhost:8000`.
+
+## Configuration
+
+### Port Configuration
+
+You can configure the application port using a `.env` file or environment variables. This works for both Docker and Local Development.
+
+1. **Create configuration file:**
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` and set your desired port, e.g., `PORT=8001`.
+
+2. **Or use environment variables:**
+   
+   **Docker:**
+   ```bash
+   PORT=8001 docker-compose up
+   ```
+
+   **Local:**
+   ```bash
+   export PORT=8001
+   ./scripts/start.sh
+   ```
+
+## Advanced Usage
+
 ### Manual Setup
 
-1. Clone this repository:
-```bash
-git clone https://github.com/aipartnerup/aipartnerupflow-docs.git
-cd aipartnerupflow-docs
-```
+If you prefer not to use the scripts:
 
-2. Create a virtual environment (recommended):
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Sync documentation from main repository:
-```bash
-python scripts/sync_docs.py
-```
-
-## Development
-
-### Local Development Server
-
-Start the local development server to preview the documentation:
-
-```bash
-mkdocs serve
-```
-
-The documentation will be available at `http://127.0.0.1:8000`.
+1.  Create a virtual environment: `python -m venv .venv`
+2.  Activate it: `source .venv/bin/activate`
+3.  Install dependencies: `pip install -r requirements.txt`
+4.  Sync docs: `python scripts/sync_docs.py`
+5.  Serve: `mkdocs serve`
 
 ### Building Documentation
 
-Build the static site:
+To build the static site (output to `site/`):
 
 ```bash
 mkdocs build
 ```
 
-The output will be in the `site/` directory.
+### Syncing Documentation
 
-### Syncing Documentation from Main Repository
+The documentation source files are maintained in the main `aipartnerupflow` repository.
 
-The documentation source files are maintained in the main aipartnerupflow repository. The `docs/` directory is automatically synced during CI/CD deployment.
+- **Local Sync**:
+  ```bash
+  python scripts/sync_docs.py
+  ```
 
-For local development, you can sync manually:
-
-1. Use the sync script:
-```bash
-python scripts/sync_docs.py
-```
-
-2. Or use the CI/CD version:
-```bash
-MAIN_REPO_PATH=../aipartnerupflow python scripts/sync_docs_ci.py
-```
-
-**Note**: Website-specific files (`index.md`, `getting-started/`) are kept in version control and are NOT synced from the main repository.
+- **CI/CD Sync**:
+  ```bash
+  # Syncs and forces overwrite, skipping website-specific files
+  python scripts/sync_docs.py --ci --path ../aipartnerupflow
+  ```
 
 ## Deployment
 
-The documentation is automatically deployed to GitHub Pages when changes are pushed to the `main` branch via GitHub Actions.
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
-
-### Manual Deployment
+The documentation is automatically deployed to GitHub Pages when changes are pushed to the `main` branch via GitHub Actions. See [DEPLOYMENT.md](DEPLOYMENT.md) for details.
 
 To manually deploy:
-
 ```bash
 mkdocs gh-deploy
 ```
@@ -106,37 +122,24 @@ mkdocs gh-deploy
 ```
 aipartnerupflow-docs/
 ├── docs/                    # Documentation source files (Markdown)
-│   ├── index.md            # Home page
-│   ├── getting-started/    # Getting started guides
-│   ├── user-guide/         # User documentation
-│   ├── architecture/       # Architecture documentation
-│   ├── development/        # Development guides
-│   └── ...
 ├── mkdocs.yml              # MkDocs configuration
 ├── requirements.txt        # Python dependencies
-├── .github/
-│   └── workflows/
-│       └── deploy.yml      # GitHub Actions deployment
+├── Dockerfile              # Docker image definition
+├── docker-compose.yml      # Docker Compose configuration
+├── scripts/
+│   ├── setup.sh            # Setup script
+│   ├── start.sh            # Start script
+│   └── sync_docs.py        # Documentation sync script
 └── README.md               # This file
 ```
 
-## Documentation Source
-
-The documentation source files are maintained in the main repository:
-- Repository: [aipartnerup/aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow)
-- Documentation directory: `docs/`
-
 ## Contributing
 
-To contribute to the documentation:
-
-1. Make changes to the documentation files in the main [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow) repository's `docs/` directory
-2. Sync the changes to this repository (or use the sync script)
-3. Test locally with `mkdocs serve`
-4. Commit and push changes
-5. The documentation will be automatically deployed
+1. Make changes to the documentation files in the main [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow) repository's `docs/` directory.
+2. Sync the changes to this repository.
+3. Test locally.
+4. Commit and push.
 
 ## License
 
-Apache-2.0 (same as the main aipartnerupflow project)
-
+Apache-2.0
