@@ -24,6 +24,15 @@ docker-compose up
 
 The documentation will be available at `http://localhost:8000`.
 
+> [!TIP]
+> **Docker Usage Guide**
+> *   **Content Changes**: Modifications to `docs/*.md` files are applied automatically (Live Reload).
+> *   **Configuration Changes**: Modifications to `mkdocs.yml` usually reload automatically. If not, run `docker-compose restart`.
+> *   **Dependency Changes**: If you modify `requirements.txt` or `Dockerfile`, you **must** rebuild the image:
+>     ```bash
+>     docker-compose up --build
+>     ```
+
 ### Option 2: Local Development
 
 **Prerequisites:**
