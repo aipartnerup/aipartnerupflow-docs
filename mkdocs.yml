@@ -79,21 +79,21 @@ nav:
     - Quick Start: getting-started/quick-start.md
     - Examples: getting-started/examples.md
   - User Guide:
-    - CLI Usage: usage/CLI_USAGE.md
+    - CLI Usage: usage/cli-usage.md
   - Architecture:
-    - Architecture Overview: architecture/ARCHITECTURE.md
-    - Directory Structure: architecture/DIRECTORY_STRUCTURE.md
-    - Extension Registry: architecture/EXTENSION_REGISTRY_DESIGN.md
-    - Naming Conventions: architecture/NAMING_CONVENTION.md
+    - Architecture Overview: architecture/architecture.md
+    - Directory Structure: architecture/directory-structure.md
+    - Extension Registry: architecture/extension-registry-design.md
+    - Naming Conventions: architecture/naming-convention.md
   - Development:
-    - Development Guide: development/DEVELOPMENT.md
-    - CLI Design: development/CLI_DESIGN.md
-    - Aggregate Results Design: development/AGGREGATE_RESULTS_DESIGN.md
+    - Development Guide: development/development.md
+    - CLI Design: development/cli-design.md
+    - Aggregate Results Design: development/aggregate-results-design.md
   - Configuration:
-    - Table Configuration: configuration/TABLE_CONFIGURATION.md
+    - Table Configuration: configuration/table-configuration.md
   - Planning:
-    - Implementation Plan: planning/IMPLEMENTATION_PLAN.md
-    - CLI Design (Planning): planning/CLI_DESIGN.md
+    - Implementation Plan: planning/implementation-plan.md
+    - CLI Design (Planning): planning/cli-design.md
 
 # Extra
 extra:
