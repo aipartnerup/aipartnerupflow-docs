@@ -44,17 +44,22 @@ jobs:
           # Create docs directory
           mkdir -p docs
           
-          # Use Python sync script for better control
-          python scripts/sync_docs_ci.py
+          # Use Python sync script in CI mode
+          python scripts/sync_docs.py --ci
           
           echo "Documentation synced from main repository"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build documentation
+      - name: Build documentation with versioning
         working-directory: docs-repo
-        run: mkdocs build
+        run: |
+          # Make build script executable
+          chmod +x scripts/build_with_versioning.sh
+          
+          # Use shared build script for versioning
+          ./scripts/build_with_versioning.sh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

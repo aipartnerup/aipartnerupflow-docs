@@ -96,11 +96,32 @@ If you prefer not to use the scripts:
 
 ### Building Documentation
 
-To build the static site (output to `site/`):
-
+**For Development (Live Preview)**:
 ```bash
+# Start development server with live reload
+./scripts/start.sh
+```
+This starts a development server at `http://localhost:8000` with automatic reload on file changes.
+
+**For Production (Static Build)**:
+```bash
+# Build and deploy to site/ directory (default, recommended)
+./scripts/deploy.sh
+
+# Or just build without deploying
+DEPLOY_PATH="" ./scripts/deploy.sh
+
+# Or use the build script directly
+./scripts/build_with_versioning.sh
+
+# Or traditional mkdocs build (no versioning)
 mkdocs build
 ```
+
+**Output Locations:**
+- Default: `site/0.2.0/`, `site/latest/` (when using `./scripts/deploy.sh`)
+- Server: `/var/www/html/0.2.0/` (when `DEPLOY_PATH=/var/www/html`)
+- All use the same `site/` directory convention (MkDocs standard)
 
 ### Syncing Documentation
 

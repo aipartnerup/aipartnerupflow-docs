@@ -1,4 +1,4 @@
-# MkDocs
+# MkDocs build outputs
 site/
 .cache/
 
@@ -27,7 +27,8 @@ ENV/
 *.swp
 *.swo
 *~
-
+site/
+site.backup.*
 # OS
 .DS_Store
 Thumbs.db
