@@ -30,6 +30,23 @@ fi
 echo -e "${GREEN}==> Activating virtual environment...${NC}"
 source .venv/bin/activate
 
+# Ensure dependencies are installed
+echo -e "${GREEN}==> Ensuring dependencies are installed...${NC}"
+if ! python -c "import mkdocs" 2>/dev/null; then
+    echo -e "${YELLOW}==> Dependencies not found, installing...${NC}"
+    pip install --upgrade pip
+    pip install -r requirements.txt
+else
+    # Check if requirements.txt has changed (optional: reinstall if needed)
+    if [ -n "${FORCE_INSTALL:-}" ] && [ "$FORCE_INSTALL" = "true" ]; then
+        echo -e "${YELLOW}==> Force reinstalling dependencies...${NC}"
+        pip install --upgrade pip
+        pip install -r requirements.txt
+    else
+        echo -e "${GREEN}==> Dependencies already installed${NC}"
+    fi
+fi
+
 # Sync documentation from main repository
 if [ "$SYNC_DOCS" = "true" ]; then
     echo -e "${GREEN}==> Syncing documentation from main repository...${NC}"
