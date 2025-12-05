@@ -12,6 +12,7 @@ WEBSITE_SPECIFIC_FILES = {
     "index.md",
     "assets",  # Directory
     "versions.json",
+    "protocol",
 }
 
 def is_website_specific(rel_path: Path) -> bool:
