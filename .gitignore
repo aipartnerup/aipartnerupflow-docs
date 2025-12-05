@@ -9,6 +9,8 @@ docs/*
 !docs/index.md
 !docs/assets/
 !docs/versions.json
+!docs/protocol/
+!docs/protocol.m
 
 # Python
 __pycache__/
