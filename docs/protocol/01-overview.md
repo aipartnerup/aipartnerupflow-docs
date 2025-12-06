@@ -226,12 +226,27 @@ The Python implementation (`aipartnerupflow`) serves as a **reference implementa
 The protocol supports extensions for custom functionality:
 
 1. **Custom Executors**: Implement custom executors for specific use cases
+   - System executors (system information, commands)
+   - Data processing executors (aggregation, transformation)
+   - External service executors (HTTP, APIs, databases)
+   - AI/LLM executors (LLM agents, AI models)
+   - Domain-specific executors (business logic, integrations)
+
 2. **Storage Backends**: Implement custom storage backends
+   - Database backends (SQL, NoSQL)
+   - File-based storage
+   - In-memory storage
+
 3. **Transport Layers**: Implement custom transport layers
+   - WebSocket
+   - Message queues
+   - Custom protocols
 
 **MUST**: Extensions MUST not break protocol compliance.
 
 **SHOULD**: Extensions SHOULD be documented and made available to the community.
+
+**Note**: While implementations may provide various executor types (e.g., `system_info_executor`, `command_executor`, `crew_manager`), the protocol only specifies the interface and registration mechanism. Specific executor identifiers are implementation-specific.
 
 ## Getting Help
 

@@ -61,13 +61,72 @@ An **Executor** is the component responsible for performing the actual work defi
 
 ### Executor Types
 
-Executors can be:
-- **Simple Functions**: Synchronous or asynchronous functions
-- **API Calls**: HTTP requests to external services
-- **Complex Agents**: LLM-based agents (e.g., CrewAI)
-- **System Commands**: Shell commands, system operations
+Executors can be categorized by their functionality and implementation:
+
+#### By Functionality
+
+1. **System Executors**: Interact with the local system
+   - System information queries (CPU, memory, disk)
+   - Command execution (shell commands)
+   - File operations
+
+2. **Data Processing Executors**: Process and transform data
+   - Data aggregation (combining results from multiple tasks)
+   - Data transformation
+   - Data validation
+
+3. **External Service Executors**: Interact with external services
+   - HTTP/HTTPS requests (REST APIs, webhooks)
+   - Database operations
+   - Third-party API integrations
+
+4. **AI/LLM Executors**: Execute AI-powered tasks
+   - LLM-based agents (e.g., CrewAI)
+   - AI model inference
+   - Natural language processing
+
+5. **Custom Executors**: User-defined executors for specific use cases
+   - Business logic executors
+   - Domain-specific operations
+   - Integration with proprietary systems
+
+#### By Implementation Category
+
+1. **Built-in Executors**: Provided by the framework implementation
+   - System information executors
+   - Command executors
+   - Result aggregation executors
+   - Tool executors (GitHub, web scraping, etc.)
+
+2. **Optional Executors**: Provided by optional extensions
+   - LLM executors (requires AI/LLM dependencies)
+   - HTTP executors (may require additional dependencies)
+   - Specialized executors
+
+3. **Custom Executors**: Created by users
+   - User-defined executors implementing the Executor interface
+   - Registered with ExecutorRegistry
 
 **MUST**: The protocol defines *how* to invoke an executor, but not *what* the executor does internally.
+
+**Note**: Specific executor implementations (e.g., `system_info_executor`, `command_executor`, `crew_manager`) are implementation-specific. The protocol only specifies the interface and registration mechanism, not the specific executor types that must be provided.
+
+### Common Executor Patterns
+
+While the protocol does not mandate specific executor types, common patterns include:
+
+1. **System Information Executors**: Query system resources (CPU, memory, disk)
+2. **Command Executors**: Execute shell commands or system operations
+3. **Data Aggregation Executors**: Combine results from multiple dependent tasks
+4. **HTTP/API Executors**: Make HTTP requests to external services
+5. **LLM Executors**: Execute AI/LLM-powered tasks (requires AI dependencies)
+6. **Tool Executors**: Integrate with external tools (GitHub, web scraping, etc.)
+
+**MUST**: Implementations MUST support custom executors for user-defined functionality.
+
+**SHOULD**: Implementations SHOULD provide common built-in executors for standard operations.
+
+**MAY**: Implementations MAY provide specialized executors for specific domains.
 
 ### Executor Interface Specification
 

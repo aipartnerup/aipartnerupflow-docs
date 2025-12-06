@@ -580,6 +580,34 @@ The `progress` field tracks execution progress as a fraction.
 
 The protocol supports extending functionality via custom executors. Executors are registered with an `ExecutorRegistry` using a unique identifier (the `method` name).
 
+### Executor Categories
+
+Executors can be categorized by their source and availability:
+
+1. **Built-in Executors**: Provided by the framework implementation
+   - System executors (e.g., `system_info_executor`, `command_executor`)
+   - Data processing executors (e.g., `aggregate_results_executor`)
+   - Tool executors (e.g., GitHub tools, web scraping tools)
+   - These are available without additional dependencies
+
+2. **Optional Executors**: Provided by optional extensions
+   - LLM executors (e.g., `crew_manager` for CrewAI) - requires AI/LLM dependencies
+   - HTTP executors - may require additional dependencies
+   - Specialized executors for specific use cases
+
+3. **Custom Executors**: Created by users
+   - User-defined executors implementing the Executor interface
+   - Registered with ExecutorRegistry using unique identifiers
+   - Can implement any business logic or integration
+
+**MUST**: Implementations MUST provide at least one executor type (built-in or custom).
+
+**SHOULD**: Implementations SHOULD provide common built-in executors for system operations.
+
+**MAY**: Implementations MAY provide optional executors for specialized use cases.
+
+**Note**: The specific executor identifiers (e.g., `system_info_executor`, `command_executor`) are implementation-specific. The protocol only specifies the registration and lookup mechanism, not the specific executor names that must be provided.
+
 ### Executor Identifier
 
 The `method` field in `schemas` is used to look up the executor in the registry.

@@ -517,6 +517,127 @@ Demonstrates copying a task before execution.
 - New `created_at` timestamp
 - Original task unchanged
 
+## Executor Type Examples
+
+The protocol supports various executor types. Here are examples of common executor patterns:
+
+### System Information Executor
+
+```json
+{
+  "id": "task-1",
+  "name": "system_info_executor",
+  "schemas": {
+    "method": "system_info_executor"
+  },
+  "inputs": {
+    "resource": "cpu"
+  }
+}
+```
+
+**Purpose**: Query system resources (CPU, memory, disk).
+
+### Command Executor
+
+```json
+{
+  "id": "task-2",
+  "name": "command_executor",
+  "schemas": {
+    "method": "command_executor"
+  },
+  "inputs": {
+    "command": "ls -la",
+    "cwd": "/tmp"
+  }
+}
+```
+
+**Purpose**: Execute shell commands or system operations.
+
+### Data Aggregation Executor
+
+```json
+{
+  "id": "task-3",
+  "name": "aggregate_results_executor",
+  "schemas": {
+    "method": "aggregate_results_executor"
+  },
+  "inputs": {},
+  "dependencies": [
+    {"id": "task-1", "required": true},
+    {"id": "task-2", "required": true}
+  ]
+}
+```
+
+**Purpose**: Combine results from multiple dependent tasks.
+
+### LLM Executor (CrewAI)
+
+```json
+{
+  "id": "task-4",
+  "name": "crew_manager",
+  "schemas": {
+    "method": "crew_manager"
+  },
+  "inputs": {
+    "text": "Analyze this data..."
+  },
+  "params": {
+    "agents": [...],
+    "tasks": [...]
+  }
+}
+```
+
+**Purpose**: Execute AI/LLM-powered tasks (requires AI dependencies).
+
+**Note**: LLM executors typically require additional configuration in `params` (agents, tasks, etc.).
+
+### HTTP/API Executor
+
+```json
+{
+  "id": "task-5",
+  "name": "http_request_executor",
+  "schemas": {
+    "method": "http_request_executor"
+  },
+  "inputs": {
+    "url": "https://api.example.com/data",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer token"
+    }
+  }
+}
+```
+
+**Purpose**: Make HTTP requests to external services.
+
+### Custom Executor
+
+```json
+{
+  "id": "task-6",
+  "name": "my_custom_executor",
+  "schemas": {
+    "method": "my_custom_executor"
+  },
+  "inputs": {
+    "custom_param": "value"
+  }
+}
+```
+
+**Purpose**: User-defined executor for specific business logic.
+
+**Note**: Custom executors must be registered with ExecutorRegistry before use.
+
 ## Multi-Language Implementation Examples
 
 ### Python Reference Implementation
