@@ -6,3 +6,6 @@ nav:
   - Execution Lifecycle: 04-execution-lifecycle.md
   - Examples: 05-examples.md
   - Interface Protocol: 06-interfaces.md
+  - Conformance: 07-conformance.md
+  - Error Handling: 08-errors.md
+  - Validation: 09-validation.md
