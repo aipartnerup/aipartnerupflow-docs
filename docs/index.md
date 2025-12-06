@@ -8,7 +8,7 @@ This directory contains detailed documentation for the aipartnerupflow project.
 - **[Quick Start](getting-started/quick-start.md)** - 5-minute quick start guide
 
 ### User Documentation
-- **Main README**: See [../README.md](../README.md) - User guide and quick start
+- **Main README**: See [GitHub Repository](https://github.com/aipartnerup/aipartnerupflow) - User guide and quick start
 
 ### Guides
 - **[Task Orchestration](guides/task-orchestration.md)** - Complete guide to task orchestration, dependencies, and priorities
@@ -44,7 +44,7 @@ This directory contains detailed documentation for the aipartnerupflow project.
 
 ## Quick Links
 
-- **Getting Started**: [quick-start.md](getting-started/quick-start.md) or [README.md](../README.md)
+- **Getting Started**: [quick-start.md](getting-started/quick-start.md)
 - **Task Orchestration**: [guides/task-orchestration.md](guides/task-orchestration.md)
 - **Custom Tasks**: [guides/custom-tasks.md](guides/custom-tasks.md)
 - **Python API Reference**: [api/python.md](api/python.md)

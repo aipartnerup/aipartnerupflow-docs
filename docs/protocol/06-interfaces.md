@@ -93,7 +93,7 @@ The protocol uses JSON-RPC 2.0 for all RPC operations. Implementations MUST comp
 **Fields**:
 - `jsonrpc` (string, required): MUST be `"2.0"`
 - `error` (object, required): Error object
-  - `code` (integer, required): Error code (see [Error Codes](#error-codes))
+  - `code` (integer, required): Error code (see [Error Codes](08-errors.md#error-codes))
   - `message` (string, required): Error message
   - `data` (any, optional): Additional error data
 - `id` (string/number, required): Request identifier (matches request, or `null` for parse errors)

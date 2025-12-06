@@ -33,11 +33,15 @@ All errors follow this format:
 ```
 
 **Fields**:
-- `code` (integer, required): Error code (see [Error Codes](#error-codes))
+- `code` (integer, required): Error code (see [Error Codes](#error-codes) section below)
 - `message` (string, required): Human-readable error message
 - `data` (any, optional): Additional error context
 
-## Standard JSON-RPC 2.0 Error Codes
+## Error Codes
+
+This section defines all error codes used by the protocol.
+
+### Standard JSON-RPC 2.0 Error Codes
 
 These codes are defined by the JSON-RPC 2.0 specification:
 
@@ -51,7 +55,7 @@ These codes are defined by the JSON-RPC 2.0 specification:
 
 **MUST**: Implementations MUST use these codes for protocol-level errors.
 
-## Protocol-Specific Error Codes
+### Protocol-Specific Error Codes
 
 These codes are specific to the AI Partner Up Flow Protocol:
 
