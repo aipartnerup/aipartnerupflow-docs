@@ -43,19 +43,10 @@ cp -r site_temp/* "$OUTPUT_DIR/$VERSION/"
 mkdir -p "$OUTPUT_DIR/latest"
 cp -r site_temp/* "$OUTPUT_DIR/latest/"
 
-# Create index.html redirect to default version
-cat > "$OUTPUT_DIR/index.html" <<EOF
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="refresh" content="0; url=/$VERSION/">
-  <link rel="canonical" href="/$VERSION/">
-</head>
-<body>
-  <p>Redirecting to <a href="/$VERSION/">version $VERSION</a>...</p>
-</body>
-</html>
-EOF
+# Copy latest version content directly to root directory
+# This allows root path to show latest version without redirect
+echo -e "${GREEN}==> Copying latest version to root directory...${NC}"
+cp -r site_temp/* "$OUTPUT_DIR/"
 
 # Clean up temporary directory
 rm -rf site_temp
