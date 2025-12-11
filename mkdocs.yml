@@ -45,7 +45,16 @@ theme:
 plugins:
   - search
   - awesome-pages
-  - mermaid2
+  - mermaid2:
+      arguments:
+        theme: base
+        themeVariables:
+          primaryColor: '#6366f1'
+          primaryTextColor: '#fff'
+          primaryBorderColor: '#6366f1'
+          lineColor: '#F8B229'
+          secondaryColor: '#006100'
+          tertiaryColor: '#fff'
   - minify:
       minify_html: true
 
@@ -91,4 +100,11 @@ extra:
       link: https://pypi.org/project/aipartnerupflow/
   version:
     provider: mike
+
+# Extra CSS and JavaScript
+extra_css:
+  - assets/mermaid-fullscreen.css
+
+extra_javascript:
+  - assets/mermaid-fullscreen.js
 
