@@ -33,9 +33,7 @@ def should_exclude(path: Path) -> bool:
     # Exclude __pycache__
     if path.name == "__pycache__":
         return True
-    # Exclude README.md (legacy, now renamed to index.md)
-    if path.name == "README.md":
-        return True
+    # Note: README.md is now synced but excluded from navigation via mkdocs.yml
     # Note: index.md in root docs/ is handled by website-specific file preservation
     return False
 

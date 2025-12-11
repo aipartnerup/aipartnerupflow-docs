@@ -49,6 +49,10 @@ plugins:
   - minify:
       minify_html: true
 
+# Exclude files from documentation
+exclude_docs: |
+  **/README.md
+
 # Extensions
 markdown_extensions:
   - pymdownx.highlight:
