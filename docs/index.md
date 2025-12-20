@@ -34,23 +34,112 @@
 })();
 </script>
 
-# Welcome
+# Welcome to aipartnerupflow
 
-**aipartnerupflow** is a Python framework for orchestrating and executing tasks. It manages when tasks run, how they depend on each other, and ensures everything executes in the right order.
+**aipartnerupflow** is a unified framework for orchestrating and executing tasks across multiple execution methods. It manages when tasks run, how they depend on each other, and ensures everything executes in the right order—whether you're calling HTTP APIs, executing SSH commands, running Docker containers, or coordinating AI agents.
 
-## Key Features
+---
 
-- **Simple Task Management** - Create, organize, and execute tasks with ease
-- **Dependency Handling** - Tasks automatically wait for their dependencies to complete
-- **Flexible Execution** - Support for custom tasks, LLM agents (CrewAI), and more
-- **Production Ready** - Built-in storage, streaming, and API support
-- **Extensible** - Easy to add custom task types and integrations
+## Problems We Solve
+
+Are you struggling with these common challenges?
+
+<div class="grid cards" markdown>
+
+-   __Complex Task Dependencies__
+
+    ---
+
+    Manually tracking dependencies, ensuring proper execution order, and handling failures across complex workflows becomes a nightmare. You end up writing custom coordination code and dealing with race conditions.
+
+-   __Multiple Execution Methods__
+
+    ---
+
+    You need to call HTTP APIs, execute SSH commands, run Docker containers, communicate via gRPC, and coordinate AI agents—but each requires different libraries and integration patterns.
+
+-   __Traditional Tasks + AI Agents__
+
+    ---
+
+    You want to add AI capabilities to existing workflows, but most solutions force you to choose: either traditional task execution OR AI agents. You're stuck with all-or-nothing decisions.
+
+-   __State Persistence & Recovery__
+
+    ---
+
+    When workflows fail or get interrupted, you lose progress. Implementing retry logic, checkpointing, and state recovery requires significant custom development.
+
+-   __Real-time Monitoring__
+
+    ---
+
+    You need to show progress to users, but building real-time monitoring with polling, WebSocket connections, or custom streaming solutions takes weeks.
+
+</div>
+
+---
+
+## Why aipartnerupflow?
+
+<div class="grid cards" markdown>
+
+-   __Unified Interface__
+
+    ---
+
+    One framework handles traditional tasks, HTTP/REST APIs, SSH commands, Docker containers, gRPC services, WebSocket communication, MCP tools, and AI agents—all through the same ExecutableTask interface.
+
+-   __Start Simple, Scale Up__
+
+    ---
+
+    Begin with a lightweight, dependency-free core. Add AI capabilities, A2A server, CLI tools, or PostgreSQL storage only when you need them. No forced upfront installations.
+
+-   __Language-Agnostic Protocol__
+
+    ---
+
+    Built on the AI Partner Up Flow Protocol, ensuring interoperability across Python, Go, Rust, JavaScript, and more. Different language implementations work together seamlessly.
+
+-   __Production-Ready__
+
+    ---
+
+    Built-in storage (DuckDB or PostgreSQL), real-time streaming, automatic retries, state persistence, and comprehensive monitoring—all included. No need to build these from scratch.
+
+-   __Extensive Executor Ecosystem__
+
+    ---
+
+    Choose from HTTP/REST APIs (with authentication), SSH remote execution, Docker containers, gRPC services, WebSocket communication, MCP integration, and LLM-based task tree generation.
+
+</div>
+
+---
+
+## What Happens When You Use aipartnerupflow?
+
+| Before | After |
+|--------|-------|
+| **Weeks** of custom coordination code | **Days** to define task trees with dependencies |
+| **Multiple** orchestration systems for different execution methods | **One unified** interface for all execution methods |
+| **All-or-nothing** decisions requiring complete rewrites | **Gradual** addition of AI agents incrementally |
+| **Weeks** building custom polling or streaming solutions | **Built-in** real-time streaming via A2A Protocol |
+| **Manual** recovery logic and lost progress | **Automatic** retries with exponential backoff and state persistence |
+| **Worrying** about resource usage at scale | **Production-ready** from day one, handle hundreds of concurrent workflows |
 
 ---
 
 ## Quick Start
 
-**New to aipartnerupflow?** Get up and running in 5 minutes!
+**New to aipartnerupflow?** Get up and running in minutes!
+
+**Installation:**
+
+```bash
+pip install aipartnerupflow
+```
 
 [Quick Start Guide](getting-started/quick-start.md){ .md-button .md-button--primary }
 
@@ -116,6 +205,48 @@
 
 ---
 
+## Learning Paths
+
+### 🚀 Quick Start (15 minutes)
+
+Perfect for getting started quickly:
+
+1. **[Quick Start](getting-started/quick-start.md)** - Get running in 10 minutes
+2. **[Basic Examples](examples/basic_task.md)** - Try examples
+3. **[Core Concepts](getting-started/concepts.md)** - Understand basics
+
+### 📚 Complete Beginner (1-2 hours)
+
+Step-by-step learning path:
+
+1. **[Getting Started Index](getting-started/index.md)** - Overview and learning paths
+2. **[First Steps Tutorial](getting-started/tutorials/tutorial-01-first-steps.md)** - Complete beginner tutorial
+3. **[Task Trees Tutorial](getting-started/tutorials/tutorial-02-task-trees.md)** - Build task trees
+4. **[Dependencies Tutorial](getting-started/tutorials/tutorial-03-dependencies.md)** - Master dependencies
+5. **[Core Concepts](getting-started/concepts.md)** - Deep dive
+6. **[Basic Examples](examples/basic_task.md)** - Practice
+
+### 💼 Professional Developer (2-4 hours)
+
+For experienced developers:
+
+1. **[Quick Start](getting-started/quick-start.md)** - Quick refresher
+2. **[Task Orchestration](guides/task-orchestration.md)** - Master orchestration
+3. **[Custom Tasks](guides/custom-tasks.md)** - Create executors
+4. **[Best Practices](guides/best-practices.md)** - Learn patterns
+5. **[API Reference](api/python.md)** - Complete reference
+
+### 🔧 Contributor (4+ hours)
+
+For framework contributors:
+
+1. **[Development Setup](development/setup.md)** - Set up environment
+2. **[Architecture Overview](architecture/overview.md)** - Understand design
+3. **[Contributing](development/contributing.md)** - Learn process
+4. **[Extending](development/extending.md)** - Extend framework
+
+---
+
 ## Popular Guides
 
 ### For Users
@@ -125,11 +256,13 @@
 - **[CLI](guides/cli.md)** - Complete CLI usage guide
 - **[API Server](guides/api-server.md)** - API server setup and usage guide
 - **[Best Practices](guides/best-practices.md)** - Best practices and recommendations
+- **[FAQ](guides/faq.md)** - Common questions and troubleshooting
 
 ### For Developers
 
 - **[Python API](api/python.md)** - Core Python library API reference (TaskManager, ExecutableTask, TaskTreeNode, etc.)
 - **[HTTP API](api/http.md)** - A2A Protocol Server HTTP API reference
+- **[Quick Reference](api/quick-reference.md)** - Cheat sheet with common snippets
 - **[Extending](development/extending.md)** - Guide for extending the framework (custom executors, extensions, hooks)
 - **[Contributing](development/contributing.md)** - Contribution guidelines and process
 
@@ -150,25 +283,31 @@
 
 ---
 
-## Learning Paths
+## Quick Navigation
 
-### New to aipartnerupflow?
+### By Task
 
-1. **[Core Concepts](getting-started/concepts.md)** (5 min) - Learn the fundamental ideas
-2. **[Quick Start](getting-started/quick-start.md)** (10 min) - Build your first task
-3. **[First Steps Tutorial](getting-started/tutorials/tutorial-01-first-steps.md)** - Complete beginner tutorial
+**I want to...**
 
-### Ready to Build?
+- **Get started quickly** → [Quick Start](getting-started/quick-start.md)
+- **Understand concepts** → [Core Concepts](getting-started/concepts.md)
+- **Create a custom executor** → [Custom Tasks Guide](guides/custom-tasks.md)
+- **Build complex workflows** → [Task Orchestration Guide](guides/task-orchestration.md)
+- **See examples** → [Examples](examples/basic_task.md)
+- **Find API reference** → [Python API](api/python.md) or [Quick Reference](api/quick-reference.md)
+- **Troubleshoot issues** → [FAQ](guides/faq.md)
+- **Learn best practices** → [Best Practices](guides/best-practices.md)
+- **Set up development** → [Development Setup](development/setup.md)
+- **Understand architecture** → [Architecture Overview](architecture/overview.md)
 
-1. **[Task Orchestration Guide](guides/task-orchestration.md)** - Deep dive into task management
-2. **[Custom Tasks Guide](guides/custom-tasks.md)** - Create your own task types
-3. **[Examples](examples/basic_task.md)** - Copy-paste ready examples
+### By Role
 
-### Production Ready?
+**I am a...**
 
-1. **[Best Practices](guides/best-practices.md)** - Production recommendations
-2. **[API Reference](api/python.md)** - Complete API documentation
-3. **[Architecture Overview](architecture/overview.md)** - Understand the system design
+- **New User** → Start with [Getting Started](getting-started/index.md)
+- **Developer** → Check [Guides](guides/) and [API Reference](api/)
+- **Contributor** → See [Development](development/) section
+- **Architect** → Review [Architecture](architecture/) documentation
 
 ---
 
@@ -177,9 +316,15 @@
 - [GitHub Repository](https://github.com/aipartnerup/aipartnerupflow) - Source code and issues
 - [PyPI Package](https://pypi.org/project/aipartnerupflow/) - Install from PyPI
 - [Protocol Documentation](protocol/01-overview.md) - A2A Protocol specification
+- [GitHub Issues](https://github.com/aipartnerup/aipartnerupflow/issues) - Report bugs and request features
+- [GitHub Discussions](https://github.com/aipartnerup/aipartnerupflow/discussions) - Ask questions and share ideas
 
 ---
 
 ## Need Help?
 
-Check out our [FAQ](guides/faq.md) for common questions and answers.
+Check out our [FAQ](guides/faq.md) for common questions and answers, or [start a discussion](https://github.com/aipartnerup/aipartnerupflow/discussions) on GitHub.
+
+---
+
+**Ready to start?** → [Getting Started →](getting-started/index.md) or [Quick Start →](getting-started/quick-start.md)
