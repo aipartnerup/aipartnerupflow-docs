@@ -1,5 +1,6 @@
 title: Protocol
 nav:
+  - index.md
   - Overview: 01-overview.md
   - Core Concepts: 02-core-concepts.md
   - Data Model: 03-data-model.md
