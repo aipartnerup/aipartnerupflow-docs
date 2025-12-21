@@ -99,7 +99,29 @@ A Task is the atomic unit of execution within a Flow. It represents a single uni
     },
     "schemas": {
       "type": ["object", "null"],
-      "description": "Configuration and method definition"
+      "description": "Configuration and method definition",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["local", "remote", "external"],
+          "description": "Executor type"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Executor identifier (executor.id). MUST match a registered executor identifier in the ExecutorRegistry."
+        },
+        "input_schema": {
+          "type": "object",
+          "description": "JSON Schema (draft-07) defining valid inputs"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model identifier (for LLM executors)"
+        }
+      },
+      "required": ["method"],
+      "additionalProperties": true
     },
     "params": {
       "type": ["object", "null"],
@@ -191,7 +213,7 @@ It is **critical** to distinguish between `inputs` and `schemas`:
 
 **Fields**:
 - `type` (string, optional): Executor type. Values: `"local"` (same process), `"remote"` (different process), `"external"` (external service).
-- `method` (string, required if `schemas` present): The key used to look up the executor in the `ExecutorRegistry`. MUST match a registered executor identifier.
+- `method` (string, **required**): The executor identifier. MUST be the executor.id (registered executor identifier) used to look up the executor in the `ExecutorRegistry`. MUST match a registered executor identifier.
 - `input_schema` (object, optional): JSON Schema (draft-07) defining what `inputs` are valid. Used for validation before execution.
 
 **Example**:
@@ -610,11 +632,12 @@ Executors can be categorized by their source and availability:
 
 ### Executor Identifier
 
-The `method` field in `schemas` is used to look up the executor in the registry.
+The `method` field in `schemas` is used to look up the executor in the registry. The value of `schemas.method` MUST be the executor.id (the registered executor identifier).
 
 **MUST**:
 - `method` MUST be a non-empty string.
-- `method` MUST match a registered executor identifier.
+- `method` MUST be the executor.id (registered executor identifier).
+- `method` MUST match a registered executor identifier in the ExecutorRegistry.
 - Executor identifiers MUST be unique within a registry.
 
 **SHOULD**:
