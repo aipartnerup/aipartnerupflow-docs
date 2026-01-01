@@ -1,5 +1,5 @@
 #!/bin/bash
-# Server deployment script for aipartnerupflow-docs
+# Server deployment script for apflow-docs
 # This script builds and deploys the documentation with versioning support
 
 set -e
@@ -9,7 +9,7 @@ set -e
 # Set to empty to only build (no deployment)
 # Set to custom path to deploy to server (e.g., /var/www/html)
 DEPLOY_PATH="${DEPLOY_PATH:-site}"
-MAIN_REPO_PATH="${MAIN_REPO_PATH:-../aipartnerupflow}"
+MAIN_REPO_PATH="${MAIN_REPO_PATH:-../apflow}"
 SYNC_DOCS="${SYNC_DOCS:-true}"
 
 # Colors for output

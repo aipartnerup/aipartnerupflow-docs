@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This document explains how to deploy the aipartnerupflow documentation website.
+This document explains how to deploy the apflow documentation website.
 
 ## Automatic Deployment (GitHub Pages)
 
@@ -141,7 +141,7 @@ The deployment script supports environment variables:
 
 ```bash
 # Main repository path (for syncing docs)
-export MAIN_REPO_PATH=/path/to/aipartnerupflow
+export MAIN_REPO_PATH=/path/to/apflow
 
 # Deployment path (default: site/ in project root, MkDocs convention)
 # Use relative path for local deployment (e.g., "site", "dist")

@@ -550,7 +550,7 @@ A2A Protocol provides:
 **Response**:
 ```json
 {
-  "name": "aipartnerupflow",
+  "name": "apflow",
   "description": "Agent workflow orchestration and execution platform",
   "url": "http://localhost:8000",
   "version": "0.2.0",
@@ -573,9 +573,9 @@ A2A Protocol provides:
 
 ### A2A Protocol Task Mapping
 
-A2A Protocol uses a `Task` object that differs from aipartnerupflow's Task. The mapping is as follows:
+A2A Protocol uses a `Task` object that differs from apflow's Task. The mapping is as follows:
 
-| aipartnerupflow Task | A2A Protocol Task | Notes |
+| apflow Task | A2A Protocol Task | Notes |
 | :--- | :--- | :--- |
 | `id` | `context_id` | Task definition ID |
 | `status` | `status.state` | Status mapping |
@@ -585,7 +585,7 @@ A2A Protocol uses a `Task` object that differs from aipartnerupflow's Task. The 
 | - | `id` | A2A execution instance ID (auto-generated) |
 | - | `history` | LLM conversation history (execution-level) |
 
-**MUST**: Implementations MUST map between aipartnerupflow Task and A2A Protocol Task when using A2A Protocol.
+**MUST**: Implementations MUST map between apflow Task and A2A Protocol Task when using A2A Protocol.
 
 ### A2A Protocol Methods
 
