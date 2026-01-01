@@ -11,7 +11,7 @@ The simplest possible task execution - a single task with no dependencies.
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
-  "name": "system_info_executor",
+  "name": "system resources",
   "status": "pending",
   "priority": 2,
   "inputs": {
