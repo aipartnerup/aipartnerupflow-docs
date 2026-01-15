@@ -14,7 +14,12 @@ This document defines the validation rules and algorithms that implementations M
 
 ### Schema Validation
 
-Tasks MUST be validated against the JSON Schema defined in [Data Model](03-data-model.md).
+
+Tasks MUST be validated against the JSON Schema defined in [Data Model](03-data-model.md), including provenance/reference fields:
+- `origin_type` MUST be one of: `create`, `link`, `copy`, `snapshot`, or null.
+- If `origin_type` is `link` or `snapshot`, `original_task_id` MUST reference a task in `completed` status (in principle).
+- `original_task_id` MUST be a valid UUID v4 if present.
+- `has_references` MUST be a boolean.
 
 **Algorithm**:
 ```

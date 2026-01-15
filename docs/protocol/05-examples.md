@@ -1,16 +1,12 @@
-# Protocol Examples
+# Complete Task Example
 
-This section provides comprehensive examples demonstrating the AI Partner Up Flow Protocol. These examples are language-agnostic and can be implemented in any programming language.
-
-## Example 1: Simple Task Execution
-
-The simplest possible task execution - a single task with no dependencies.
-
-### Task Definition
+This example shows a fully populated Task object with all standard fields. Use this as a reference for constructing valid tasks.
 
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
+  "parent_id": null,
+  "user_id": "user-123",
   "name": "system resources",
   "status": "pending",
   "priority": 2,
@@ -29,8 +25,95 @@ The simplest possible task execution - a single task with no dependencies.
       }
     }
   },
+  "params": null,
+  "result": null,
+  "error": null,
   "dependencies": [],
-  "progress": 0.0
+  "progress": 0.0,
+  "created_at": "2025-01-15T10:30:00Z",
+  "started_at": null,
+  "updated_at": "2025-01-15T10:30:00Z",
+  "completed_at": null,
+  "origin_type": "create",
+  "original_task_id": null,
+  "has_references": false
+}
+```
+# Example 10: Linked and Snapshotted Tasks
+
+Demonstrates a task created by linking to a completed source task.
+
+### Source Task (Completed)
+
+```json
+{
+  "id": "source-task-uuid",
+  "name": "Generate Report",
+  "status": "completed",
+  "result": {"report": "..."},
+  "created_at": "2025-01-15T09:00:00Z"
+}
+```
+
+### Linked Task
+
+```json
+{
+  "id": "linked-task-uuid",
+  "name": "Generate Report",
+  "status": "pending",
+  "origin_type": "link",
+  "original_task_id": "source-task-uuid",
+  "created_at": "2025-01-15T12:00:00Z"
+}
+```
+
+**Note:** For `origin_type: link` or `snapshot`, the `original_task_id` MUST reference a task in `completed` status (in principle).
+# Protocol Examples
+
+This section provides comprehensive examples demonstrating the AI Partner Up Flow Protocol. These examples are language-agnostic and can be implemented in any programming language.
+
+## Example 1: Simple Task Execution
+
+The simplest possible task execution - a single task with no dependencies.
+
+### Task Definition
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "parent_id": null,
+  "user_id": "user-123",
+  "name": "system resources",
+  "status": "pending",
+  "priority": 2,
+  "inputs": {
+    "resource": "cpu"
+  },
+  "schemas": {
+    "method": "system_info_executor",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": ["cpu", "memory", "disk", "all"]
+        }
+      }
+    }
+  },
+  "params": null,
+  "result": null,
+  "error": null,
+  "dependencies": [],
+  "progress": 0.0,
+  "created_at": "2025-01-15T10:30:00Z",
+  "started_at": null,
+  "updated_at": "2025-01-15T10:30:00Z",
+  "completed_at": null,
+  "origin_type": "create",
+  "original_task_id": null,
+  "has_references": false
 }
 ```
 

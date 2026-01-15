@@ -2,6 +2,11 @@
 
 The Execution Lifecycle defines how a Task transitions between states and how the system manages execution order. This specification is **mandatory** for all implementations.
 
+
+## Provenance Constraints
+
+For tasks with `origin_type` of `link` or `snapshot`, the referenced source task (`original_task_id`) MUST be in `completed` status (in principle) before the new task is created or executed. This ensures that only completed results are linked or snapshotted for further use.
+
 ## State Machine
 
 A Task transitions through a well-defined set of states. Implementations **MUST** enforce valid state transitions and **MUST NOT** allow invalid transitions.

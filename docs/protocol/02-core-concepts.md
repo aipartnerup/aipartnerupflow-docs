@@ -47,6 +47,21 @@ A **Task** is the atomic unit of execution within a Flow.
 4. **Data**: `inputs`, `result`, `error`
 5. **Tracking**: `progress`, timestamps (`created_at`, `started_at`, `completed_at`)
 
+
+#### Task Provenance and References
+
+To support provenance and advanced referencing, the following fields are included in the Task model:
+
+- `origin_type`: Indicates how the task was created. Possible values:
+    - `create`: Task created freshly
+    - `link`: Task linked from another. The source task MUST be in `completed` status (in principle).
+    - `copy`: Task copied from another (can be modified)
+    - `snapshot`: Task snapshot from another (cannot be modified). The source task MUST be in `completed` status (in principle).
+- `original_task_id`: The ID of the source task if this task was copied, linked, or snapshotted.
+- `has_references`: Boolean indicating whether this task is referenced/copied by others.
+
+These fields enable tracking task lineage, enforcing immutability for snapshots, and ensuring that links/snapshots only reference completed tasks.
+
 See [Data Model](03-data-model.md) for complete task schema.
 
 ## Executor

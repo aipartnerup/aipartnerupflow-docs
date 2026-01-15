@@ -65,7 +65,7 @@ These codes are specific to the AI Partner Up Flow Protocol:
 | -32002 | Circular dependency | Circular dependency detected in task tree | Task dependencies form a cycle |
 | -32003 | Executor not found | The specified executor is not registered | `schemas.method` doesn't match any registered executor |
 | -32004 | Unauthorized | Request is not authorized | Authentication failed or insufficient permissions |
-| -32005 | Invalid task schema | Task schema validation failed | Task data doesn't conform to schema |
+| -32005 | Invalid task schema | Task schema validation failed | Task data doesn't conform to schema (including invalid or missing `origin_type`, `original_task_id`, `has_references`, or if `origin_type` is `link`/`snapshot` and the referenced task is not `completed`) |
 | -32006 | Invalid state transition | Invalid state transition attempted | Attempted transition violates state machine rules |
 | -32007 | Dependency not satisfied | Task dependencies are not satisfied | Task cannot execute because dependencies are not ready |
 | -32008 | Task already executing | Task is already being executed | Attempt to execute a task that's already `in_progress` |
