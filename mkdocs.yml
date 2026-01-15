@@ -1,8 +1,8 @@
-site_name: aipartnerupflow Documentation
+site_name: apflow Documentation
 site_description: Task Orchestration and Execution Framework Documentation
 site_url: https://flow.aipartnerup.com
-repo_url: https://github.com/aipartnerup/aipartnerupflow
-repo_name: aipartnerup/aipartnerupflow
+repo_url: https://github.com/aipartnerup/apflow
+repo_name: aipartnerup/apflow
 edit_uri: edit/main/docs/
 
 # Copyright
@@ -95,9 +95,9 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/aipartnerup/aipartnerupflow
+      link: https://github.com/aipartnerup/apflow
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/aipartnerupflow/
+      link: https://pypi.org/project/apflow/
   version:
     provider: mike
 

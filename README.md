@@ -1,10 +1,10 @@
-# aipartnerupflow Documentation
+# apflow Documentation
 
-This repository contains the documentation website for [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow), built with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+This repository contains the documentation website for [apflow](https://github.com/aipartnerup/apflow), built with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
 
 ## Overview
 
-This is a standalone documentation project that serves the developer documentation for the aipartnerupflow library. The documentation source files are maintained in the main [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow) repository under the `docs/` directory.
+This is a standalone documentation project that serves the developer documentation for the apflow library. The documentation source files are maintained in the main [apflow](https://github.com/aipartnerup/apflow) repository under the `docs/` directory.
 
 ## Quick Start
 
@@ -125,7 +125,7 @@ mkdocs build
 
 ### Syncing Documentation
 
-The documentation source files are maintained in the main `aipartnerupflow` repository.
+The documentation source files are maintained in the main `apflow` repository.
 
 - **Local Sync**:
   ```bash
@@ -135,7 +135,7 @@ The documentation source files are maintained in the main `aipartnerupflow` repo
 - **CI/CD Sync**:
   ```bash
   # Syncs and forces overwrite, skipping website-specific files
-  python scripts/sync_docs.py --ci --path ../aipartnerupflow
+  python scripts/sync_docs.py --ci --path ../apflow
   ```
 
 ## Deployment
@@ -150,7 +150,7 @@ mkdocs gh-deploy
 ## Project Structure
 
 ```
-aipartnerupflow-docs/
+apflow-docs/
 ├── docs/                    # Documentation source files (Markdown)
 ├── mkdocs.yml              # MkDocs configuration
 ├── requirements.txt        # Python dependencies
@@ -165,7 +165,7 @@ aipartnerupflow-docs/
 
 ## Contributing
 
-1. Make changes to the documentation files in the main [aipartnerupflow](https://github.com/aipartnerup/aipartnerupflow) repository's `docs/` directory.
+1. Make changes to the documentation files in the main [apflow](https://github.com/aipartnerup/apflow) repository's `docs/` directory.
 2. Sync the changes to this repository.
 3. Test locally.
 4. Commit and push.

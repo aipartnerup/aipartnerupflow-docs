@@ -1,9 +1,9 @@
 #!/bin/bash
-# Setup script for aipartnerupflow-docs
+# Setup script for apflow-docs
 
 set -e
 
-echo "==> Setting up aipartnerupflow-docs..."
+echo "==> Setting up apflow-docs..."
 
 # Check Python version
 python_version=$(python3 --version 2>&1 | awk '{print $2}')

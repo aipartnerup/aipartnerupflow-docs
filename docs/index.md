@@ -34,9 +34,9 @@
 })();
 </script>
 
-# Welcome to aipartnerupflow
+# Welcome to apflow
 
-**aipartnerupflow** is a unified framework for orchestrating and executing tasks across multiple execution methods. It manages when tasks run, how they depend on each other, and ensures everything executes in the right order—whether you're calling HTTP APIs, executing SSH commands, running Docker containers, or coordinating AI agents.
+**apflow** is a unified framework for orchestrating and executing tasks across multiple execution methods. It manages when tasks run, how they depend on each other, and ensures everything executes in the right order—whether you're calling HTTP APIs, executing SSH commands, running Docker containers, or coordinating AI agents.
 
 ---
 
@@ -80,7 +80,7 @@ Are you struggling with these common challenges?
 
 ---
 
-## Why aipartnerupflow?
+## Why apflow?
 
 <div class="grid cards" markdown>
 
@@ -118,7 +118,7 @@ Are you struggling with these common challenges?
 
 ---
 
-## What Happens When You Use aipartnerupflow?
+## What Happens When You Use apflow?
 
 | Before | After |
 |--------|-------|
@@ -133,12 +133,12 @@ Are you struggling with these common challenges?
 
 ## Quick Start
 
-**New to aipartnerupflow?** Get up and running in minutes!
+**New to apflow?** Get up and running in minutes!
 
 **Installation:**
 
 ```bash
-pip install aipartnerupflow
+pip install apflow
 ```
 
 [Quick Start Guide](getting-started/quick-start.md){ .md-button .md-button--primary }
@@ -165,7 +165,7 @@ pip install aipartnerupflow
 
     ---
 
-    Complete guides for using aipartnerupflow
+    Complete guides for using apflow
 
     [Guides →](guides/task-orchestration.md)
 
@@ -313,17 +313,17 @@ For framework contributors:
 
 ## Additional Resources
 
-- [GitHub Repository](https://github.com/aipartnerup/aipartnerupflow) - Source code and issues
-- [PyPI Package](https://pypi.org/project/aipartnerupflow/) - Install from PyPI
+- [GitHub Repository](https://github.com/aipartnerup/apflow) - Source code and issues
+- [PyPI Package](https://pypi.org/project/apflow/) - Install from PyPI
 - [Protocol Documentation](protocol/01-overview.md) - A2A Protocol specification
-- [GitHub Issues](https://github.com/aipartnerup/aipartnerupflow/issues) - Report bugs and request features
-- [GitHub Discussions](https://github.com/aipartnerup/aipartnerupflow/discussions) - Ask questions and share ideas
+- [GitHub Issues](https://github.com/aipartnerup/apflow/issues) - Report bugs and request features
+- [GitHub Discussions](https://github.com/aipartnerup/apflow/discussions) - Ask questions and share ideas
 
 ---
 
 ## Need Help?
 
-Check out our [FAQ](guides/faq.md) for common questions and answers, or [start a discussion](https://github.com/aipartnerup/aipartnerupflow/discussions) on GitHub.
+Check out our [FAQ](guides/faq.md) for common questions and answers, or [start a discussion](https://github.com/aipartnerup/apflow/discussions) on GitHub.
 
 ---
 

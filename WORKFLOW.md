@@ -5,14 +5,14 @@ This document explains how the documentation is managed and synced between the m
 ## Overview
 
 The documentation follows a **single source of truth** model:
-- **Main Repository** (`aipartnerup/aipartnerupflow`): Contains the source documentation files
-- **Documentation Repository** (`aipartnerup/aipartnerupflow-docs`): Contains the website configuration and website-specific files
+- **Main Repository** (`aipartnerup/apflow`): Contains the source documentation files
+- **Documentation Repository** (`aipartnerup/apflow-docs`): Contains the website configuration and website-specific files
 
 ## File Categories
 
 ### 1. Synced from Main Repository
 
-These files are automatically synced from `aipartnerupflow/docs/` during CI/CD deployment:
+These files are automatically synced from `apflow/docs/` during CI/CD deployment:
 
 - `docs/architecture/` - Architecture documentation
 - `docs/development/` - Development guides
@@ -40,13 +40,13 @@ These files are maintained in the documentation repository and are NOT synced:
 
 ### For Documentation Authors
 
-1. **Edit documentation** in the main repository: `aipartnerupflow/docs/`
+1. **Edit documentation** in the main repository: `apflow/docs/`
 2. **Commit and push** to the main repository
 3. **Documentation is automatically synced** during the next deployment
 
 ### For Website Maintainers
 
-1. **Edit website-specific files** in the documentation repository: `aipartnerupflow-docs/docs/`
+1. **Edit website-specific files** in the documentation repository: `apflow-docs/docs/`
 2. **Commit and push** to the documentation repository
 3. **Website is automatically deployed** via GitHub Actions
 
@@ -59,7 +59,7 @@ For local development, you can manually sync documentation:
 python scripts/sync_docs.py
 
 # Or use CI/CD version (supports custom paths)
-MAIN_REPO_PATH=../aipartnerupflow python scripts/sync_docs_ci.py
+MAIN_REPO_PATH=../apflow python scripts/sync_docs_ci.py
 ```
 
 ## CI/CD Deployment
@@ -77,12 +77,12 @@ See `.github/workflows/deploy.yml` for details.
 
 ### Adding to Main Repository
 
-1. Add files to `aipartnerupflow/docs/`
+1. Add files to `apflow/docs/`
 2. They will be automatically synced during deployment
 
 ### Adding Website-Specific Content
 
-1. Add files to `aipartnerupflow-docs/docs/`
+1. Add files to `apflow-docs/docs/`
 2. Update `mkdocs.yml` navigation if needed
 3. Commit to the documentation repository
 

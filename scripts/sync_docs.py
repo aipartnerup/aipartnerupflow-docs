@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to sync documentation files from the main aipartnerupflow repository.
+Script to sync documentation files from the main apflow repository.
 
 Usage:
     python3 scripts/sync_docs.py [--ci] [--force] [--preserve] [--path /path/to/repo]
@@ -21,7 +21,7 @@ except ImportError:
     from scripts import clean_docs
 
 # Configuration
-DOCS_SOURCE_REL = Path("../aipartnerupflow/docs")
+DOCS_SOURCE_REL = Path("../apflow/docs")
 DOCS_TARGET = Path("docs")
 
 
@@ -58,13 +58,13 @@ def sync_docs(force: bool = False, preserve: bool = False, repo_path: str = None
             source_path = main_repo_path / "docs"
         else:
             # Default to relative path
-            main_repo_path = Path("../aipartnerupflow")
+            main_repo_path = Path("../apflow")
             source_path = main_repo_path / "docs"
 
         if not source_path.exists():
             print(f"Error: Source directory not found: {source_path}")
             if not git_url:
-                print("Please ensure the aipartnerupflow repository is in the parent directory or use --path / --git-url.")
+                print("Please ensure the apflow repository is in the parent directory or use --path / --git-url.")
             return False
 
         print(f"Syncing from: {source_path.resolve()}")
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     parser.add_argument("--preserve", action="store_true", help="Preserve website-specific files (do not overwrite from source)")
     parser.add_argument("--clean", action="store_true", help="Clean docs directory before syncing (preserves website-specific files)")
     parser.add_argument("--path", help="Path to the main repository", default=None)
-    DEFAULT_GIT_URL = "https://github.com/aipartnerup/aipartnerupflow.git"
+    DEFAULT_GIT_URL = "https://github.com/aipartnerup/apflow.git"
     parser.add_argument("--git-url", nargs="?", const=DEFAULT_GIT_URL, help=f"URL of the git repository to clone (default if flag used: {DEFAULT_GIT_URL})")
     parser.add_argument("--git-branch", help="Branch to clone", default="main")
     

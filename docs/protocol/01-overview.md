@@ -213,7 +213,7 @@ This protocol specification is **independent** of any specific implementation:
 
 ## Reference Implementation
 
-The Python implementation (`aipartnerupflow`) serves as a **reference implementation**:
+The Python implementation (`apflow`) serves as a **reference implementation**:
 
 - Demonstrates protocol compliance
 - Provides examples and patterns
