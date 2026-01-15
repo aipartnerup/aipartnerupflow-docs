@@ -34,15 +34,16 @@
 ### Field Relationships and Constraints
 
 **MUST**:
-- If `status` is `completed`, `result` SHOULD NOT be `null`.
-- If `status` is `failed` or `cancelled`, `error` SHOULD NOT be `null`.
-- If `status` is `pending`, `started_at` MUST be `null`.
-- If `status` is `in_progress`, `started_at` MUST NOT be `null`.
-- If `status` is terminal (`completed`, `failed`, `cancelled`), `completed_at` MUST NOT be `null`.
-- If `parent_id` is present, the referenced task MUST exist in the same flow.
-- All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
-- `progress` MUST be in range [0.0, 1.0].
-- If `origin_type` is `link` or `snapshot`, the `original_task_id` MUST reference a task in `completed` status (in principle).
+  - If `status` is `completed`, `result` SHOULD NOT be `null`.
+  - If `status` is `failed` or `cancelled`, `error` SHOULD NOT be `null`.
+  - If `status` is `pending`, `started_at` MUST be `null`.
+  - If `status` is `in_progress`, `started_at` MUST NOT be `null`.
+  - If `status` is terminal (`completed`, `failed`, `cancelled`), `completed_at` MUST NOT be `null`.
+  - If `parent_id` is present, the referenced task MUST exist in the same flow.
+  - All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
+  - `progress` MUST be in range [0.0, 1.0].
+  - If `origin_type` is `link` or `snapshot`, the `original_task_id` MUST reference a task in `completed` status (in principle).
+  
 ### JSON Schema Definition
 
 ```json
@@ -253,199 +254,7 @@
   "has_references": false
 }
 ```
-# Data Model
 
-The Data Model defines the standard JSON structure for objects exchanged between components. Adherence to this schema ensures interoperability across different language implementations.
-
-## Protocol Compliance
-
-**MUST**: All implementations MUST validate incoming data against the schemas defined in this document.  
-**MUST**: All implementations MUST produce data conforming to these schemas.  
-**SHOULD**: Implementations SHOULD use JSON Schema for validation where applicable.
-
-## Task Schema
-
-A Task is the atomic unit of execution within a Flow. It represents a single unit of work that can be executed by an Executor.
-
-### Complete Field Specification
-
-| Field | Type | Required | Default | Constraints | Description |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `id` | String (UUID v4) | Yes | - | Must be valid UUID v4 | Unique identifier for the task. MUST be unique across all tasks. |
-| `parent_id` | String (UUID v4) | No | `null` | Must be valid UUID v4 if present | ID of the parent task (if part of a hierarchy). Used for organizational purposes only, does not affect execution order. |
-| `user_id` | String | No | `null` | Non-empty string if present | User identifier for multi-tenant scenarios. Used for access control and filtering. |
-| `name` | String | Yes | - | Non-empty string, max 255 chars | Name or method identifier of the task. MUST match a registered executor's identifier when `schemas.method` is present. |
-| `status` | String (enum) | Yes | `"pending"` | One of: `pending`, `in_progress`, `completed`, `failed`, `cancelled` | Current execution state. See [Execution Lifecycle](04-execution-lifecycle.md) for state machine details. |
-| `priority` | Integer | No | `2` | Range: 0-3 (0=urgent, 1=high, 2=normal, 3=low) | Execution priority. Lower values = higher priority. Used for scheduling when multiple tasks are ready. |
-| `inputs` | Object (JSON) | No | `{}` | Valid JSON object | **Runtime** input parameters for the executor. Contains the actual data to be processed. |
-| `schemas` | Object (JSON) | No | `null` | Valid JSON object | **Configuration** and method definition. Defines *which* executor to use and *how* to validate inputs. |
-| `params` | Object (JSON) | No | `null` | Valid JSON object | Additional executor-specific parameters. Used for executor configuration beyond `schemas`. |
-| `result` | Object (JSON) | No | `null` | Valid JSON object | Execution result. MUST be `null` when status is not `completed`. SHOULD be populated when status is `completed`. |
-| `error` | String | No | `null` | Non-empty string if present | Error message. MUST be `null` when status is not `failed` or `cancelled`. SHOULD be populated when status is `failed` or `cancelled`. |
-| `dependencies` | Array | No | `[]` | Array of Dependency objects | List of dependencies that must be satisfied before execution. See [Dependency Schema](#dependency-schema) for structure. |
-| `progress` | Number (float) | No | `0.0` | Range: 0.0-1.0 | Execution progress as a fraction (0.0 = not started, 1.0 = complete). SHOULD be updated during execution. |
-| `created_at` | String (ISO 8601) | No | Current timestamp | Valid ISO 8601 datetime | Task creation timestamp. SHOULD be set when task is created. |
-| `started_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Task execution start timestamp. MUST be `null` when status is `pending`. SHOULD be set when status transitions to `in_progress`. |
-| `updated_at` | String (ISO 8601) | No | Current timestamp | Valid ISO 8601 datetime | Last update timestamp. SHOULD be updated whenever task is modified. |
-| `completed_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Task completion timestamp. MUST be `null` when status is not terminal (`completed`, `failed`, `cancelled`). SHOULD be set when status transitions to terminal state. |
-
-### Field Relationships and Constraints
-
-**MUST**:
-- If `status` is `completed`, `result` SHOULD NOT be `null`.
-- If `status` is `failed` or `cancelled`, `error` SHOULD NOT be `null`.
-- If `status` is `pending`, `started_at` MUST be `null`.
-- If `status` is `in_progress`, `started_at` MUST NOT be `null`.
-- If `status` is terminal (`completed`, `failed`, `cancelled`), `completed_at` MUST NOT be `null`.
-- If `parent_id` is present, the referenced task MUST exist in the same flow.
-- All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
-- `progress` MUST be in range [0.0, 1.0].
-
-**SHOULD**:
-- `name` SHOULD match a registered executor identifier when `schemas.method` is present.
-- `inputs` SHOULD conform to `schemas.input_schema` if `schemas.input_schema` is present.
-- `created_at`, `updated_at`, `started_at`, `completed_at` SHOULD use UTC timezone.
-
-### JSON Schema Definition
-
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "required": ["id", "name", "status"],
-  "properties": {
-    "id": {
-      "type": "string",
-      "format": "uuid",
-      "description": "Unique identifier for the task (UUID v4)"
-    },
-    "parent_id": {
-      "type": ["string", "null"],
-      "format": "uuid",
-      "description": "ID of the parent task (organizational only)"
-    },
-    "user_id": {
-      "type": ["string", "null"],
-      "minLength": 1,
-      "description": "User identifier for multi-tenant scenarios"
-    },
-    "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 255,
-      "description": "Name or method identifier of the task"
-    },
-    "status": {
-      "type": "string",
-      "enum": ["pending", "in_progress", "completed", "failed", "cancelled"],
-      "description": "Current execution state"
-    },
-    "priority": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 3,
-      "default": 2,
-      "description": "Execution priority (0=urgent, 1=high, 2=normal, 3=low)"
-    },
-    "inputs": {
-      "type": "object",
-      "default": {},
-      "description": "Runtime input parameters for the executor"
-    },
-    "schemas": {
-      "type": ["object", "null"],
-      "description": "Configuration and method definition",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["local", "remote", "external"],
-          "description": "Executor type"
-        },
-        "method": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Executor identifier (executor.id). MUST match a registered executor identifier in the ExecutorRegistry."
-        },
-        "input_schema": {
-          "type": "object",
-          "description": "JSON Schema (draft-07) defining valid inputs"
-        },
-        "model": {
-          "type": "string",
-          "description": "Model identifier (for LLM executors)"
-        }
-      },
-      "required": ["method"],
-      "additionalProperties": true
-    },
-    "params": {
-      "type": ["object", "null"],
-      "description": "Additional executor-specific parameters"
-    },
-    "result": {
-      "type": ["object", "null"],
-      "description": "Execution result (populated when status is completed)"
-    },
-    "error": {
-      "type": ["string", "null"],
-      "description": "Error message (populated when status is failed or cancelled)"
-    },
-    "dependencies": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/dependency"
-      },
-      "default": [],
-      "description": "List of dependencies that must be satisfied before execution"
-    },
-    "progress": {
-      "type": "number",
-      "minimum": 0.0,
-      "maximum": 1.0,
-      "default": 0.0,
-      "description": "Execution progress as a fraction"
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Task creation timestamp (ISO 8601)"
-    },
-    "started_at": {
-      "type": ["string", "null"],
-      "format": "date-time",
-      "description": "Task execution start timestamp (ISO 8601)"
-    },
-    "updated_at": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Last update timestamp (ISO 8601)"
-    },
-    "completed_at": {
-      "type": ["string", "null"],
-      "format": "date-time",
-      "description": "Task completion timestamp (ISO 8601)"
-    }
-  },
-  "definitions": {
-    "dependency": {
-      "type": "object",
-      "required": ["id"],
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid",
-          "description": "ID of the task to depend on"
-        },
-        "required": {
-          "type": "boolean",
-          "default": true,
-          "description": "If true, the dependent task must complete successfully"
-        }
-      }
-    }
-  }
-}
-```
 
 ### Inputs vs Schemas
 
