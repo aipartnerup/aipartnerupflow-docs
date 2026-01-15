@@ -22,6 +22,17 @@
 | `original_task_id` | String (UUID v4) | No | `null` | Must be valid UUID v4 if present | Source task ID if this task was copied, linked, or snapshotted. |
 | `has_references` | Boolean | No | `false` | - | Whether this task is referenced/copied by others. |
 
+### Auxiliary Fields (Database Optimization)
+
+These fields are not required by the protocol, but are recommended for database implementations to optimize queries and tree operations:
+
+| Field           | Type    | Description                                                        |
+|-----------------|---------|--------------------------------------------------------------------|
+| `task_tree_id`  | String  | Identifier for the task tree. Used to efficiently query all tasks in a tree. |
+| `has_children`  | Boolean | Indicates if the task has child tasks. Used for fast child lookup. |
+
+> **Note:** These fields are for implementation convenience and do not affect protocol behavior.
+
 #### `origin_type` values
 
 | Value      | Description                                                        |
@@ -43,7 +54,7 @@
   - All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
   - `progress` MUST be in range [0.0, 1.0].
   - If `origin_type` is `link` or `snapshot`, the `original_task_id` MUST reference a task in `completed` status (in principle).
-  
+
 ### JSON Schema Definition
 
 ```json
