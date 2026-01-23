@@ -1,38 +1,24 @@
-<script>
-// Hide navigation sidebar on homepage only
-(function() {
-  if (window.location.pathname === '/' || window.location.pathname.match(/^\/[^\/]*\/?$/)) {
-    var style = document.createElement('style');
-    style.textContent = `
-      .md-sidebar--primary,
-      .md-nav--primary {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .md-main__inner {
-        max-width: 100% !important;
-      }
-      .md-content {
-        margin-left: 0 !important;
-        max-width: 100% !important;
-        padding-left: 1rem !important;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Also directly hide elements
-    setTimeout(function() {
-      var sidebar = document.querySelector('.md-sidebar--primary');
-      var nav = document.querySelector('.md-nav--primary');
-      if (sidebar) sidebar.style.display = 'none';
-      if (nav) nav.style.display = 'none';
-    }, 100);
+<style>
+/* Hide the sidebar only on the desktop and keep the menu on the mobile. */
+@media (min-width: 960px) {
+  .md-sidebar--primary,
+  .md-nav--primary {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-})();
-</script>
+  .md-main__inner {
+    max-width: 100% !important;
+  }
+  .md-content {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+  }
+}
+</style>
 
 # Welcome to apflow
 
