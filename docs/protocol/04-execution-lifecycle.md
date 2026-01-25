@@ -5,7 +5,7 @@ The Execution Lifecycle defines how a Task transitions between states and how th
 
 ## Provenance Constraints
 
-For tasks with `origin_type` of `link` or `snapshot`, the referenced source task (`original_task_id`) MUST be in `completed` status (in principle) before the new task is created or executed. This ensures that only completed results are linked or snapshotted for further use.
+For tasks with `origin_type` of `link` or `archive`, the referenced source task (`original_task_id`) MUST be in `completed` status (in principle) before the new task is created or executed. This ensures that only completed results are linked or snapshotted for further use.
 
 ## State Machine
 

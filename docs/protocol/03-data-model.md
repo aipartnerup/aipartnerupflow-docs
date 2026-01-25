@@ -18,7 +18,7 @@
 | `started_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Task execution start timestamp. MUST be `null` when status is `pending`. SHOULD be set when status transitions to `in_progress`. |
 | `updated_at` | String (ISO 8601) | No | Current timestamp | Valid ISO 8601 datetime | Last update timestamp. SHOULD be updated whenever task is modified. |
 | `completed_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Task completion timestamp. MUST be `null` when status is not terminal (`completed`, `failed`, `cancelled`). SHOULD be set when status transitions to terminal state. |
-| `origin_type` | String (enum) | No | `null` | One of: `create`, `link`, `copy`, `snapshot` | Origin of the task definition. See below for meaning. |
+| `origin_type` | String (enum) | No | `null` | One of: `create`, `link`, `copy`, `archive` | Origin of the task definition. See below for meaning. |
 | `original_task_id` | String (UUID v4) | No | `null` | Must be valid UUID v4 if present | Source task ID if this task was copied, linked, or snapshotted. |
 | `has_references` | Boolean | No | `false` | - | Whether this task is referenced/copied by others. |
 
@@ -40,7 +40,7 @@ These fields are not required by the protocol, but are recommended for database 
 | `create`   | Task created freshly                                               |
 | `link`     | Task linked from another. **The source task MUST be in `completed` status (in principle).** |
 | `copy`     | Task copied from another (can be modified)                         |
-| `snapshot` | Task snapshot from another (cannot be modified). **The source task MUST be in `completed` status (in principle).** |
+| `archive` | Task archive from another (cannot be modified). **The source task MUST be in `completed` status (in principle).** |
 
 ### Field Relationships and Constraints
 
@@ -53,7 +53,7 @@ These fields are not required by the protocol, but are recommended for database 
   - If `parent_id` is present, the referenced task MUST exist in the same flow.
   - All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
   - `progress` MUST be in range [0.0, 1.0].
-  - If `origin_type` is `link` or `snapshot`, the `original_task_id` MUST reference a task in `completed` status (in principle).
+  - If `origin_type` is `link` or `archive`, the `original_task_id` MUST reference a task in `completed` status (in principle).
 
 ### JSON Schema Definition
 
@@ -176,8 +176,8 @@ These fields are not required by the protocol, but are recommended for database 
     },
     "origin_type": {
       "type": ["string", "null"],
-      "enum": ["create", "link", "copy", "snapshot", null],
-      "description": "Origin of the task definition. One of: create, link, copy, snapshot. For link/snapshot, the source task MUST be completed."
+      "enum": ["create", "link", "copy", "archive", null],
+      "description": "Origin of the task definition. One of: create, link, copy, archive. For link/archive, the source task MUST be completed."
     },
     "original_task_id": {
       "type": ["string", "null"],

@@ -56,7 +56,7 @@ To support provenance and advanced referencing, the following fields are include
     - `create`: Task created freshly
     - `link`: Task linked from another. The source task MUST be in `completed` status (in principle).
     - `copy`: Task copied from another (can be modified)
-    - `snapshot`: Task snapshot from another (cannot be modified). The source task MUST be in `completed` status (in principle).
+    - `archive`: Task archive from another (cannot be modified). The source task MUST be in `completed` status (in principle).
 - `original_task_id`: The ID of the source task if this task was copied, linked, or snapshotted.
 - `has_references`: Boolean indicating whether this task is referenced/copied by others.
 
