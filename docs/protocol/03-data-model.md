@@ -21,6 +21,15 @@
 | `origin_type` | String (enum) | No | `null` | One of: `create`, `link`, `copy`, `archive` | Origin of the task definition. See below for meaning. |
 | `original_task_id` | String (UUID v4) | No | `null` | Must be valid UUID v4 if present | Source task ID if this task was copied, linked, or snapshotted. |
 | `has_references` | Boolean | No | `false` | - | Whether this task is referenced/copied by others. |
+| `schedule_type` | String (enum) | No | `null` | One of: `once`, `interval`, `cron`, `daily`, `weekly`, `monthly` | Scheduling mode for recurring execution. See [Scheduling Fields](#scheduling-fields). |
+| `schedule_expression` | String | No | `null` | Non-empty string if present | Schedule expression format depends on `schedule_type` (e.g., cron string, interval seconds). |
+| `schedule_enabled` | Boolean | No | `false` | - | Whether scheduling is enabled for this task. |
+| `schedule_start_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Earliest time the schedule can trigger. |
+| `schedule_end_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Latest time the schedule can trigger (after this, scheduling is disabled). |
+| `next_run_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Next scheduled execution time (computed). |
+| `last_run_at` | String (ISO 8601) | No | `null` | Valid ISO 8601 datetime or null | Last time this scheduled task was executed. |
+| `max_runs` | Integer | No | `null` | Non-negative integer if present | Maximum number of scheduled runs (null = unlimited). |
+| `run_count` | Integer | No | `0` | Non-negative integer | Number of times this scheduled task has executed. |
 
 ### Auxiliary Fields (Database Optimization)
 
@@ -54,6 +63,34 @@ These fields are not required by the protocol, but are recommended for database 
   - All dependency IDs in `dependencies` MUST reference existing tasks in the same flow.
   - `progress` MUST be in range [0.0, 1.0].
   - If `origin_type` is `link` or `archive`, the `original_task_id` MUST reference a task in `completed` status (in principle).
+  - If `schedule_enabled` is `true`, `schedule_type` and `schedule_expression` MUST NOT be `null`.
+  - If `max_runs` is present, `run_count` MUST be less than or equal to `max_runs`.
+  - If `schedule_end_at` is present, `next_run_at` MUST be `null` or not later than `schedule_end_at`.
+
+### Scheduling Fields
+
+Scheduling allows a task definition to trigger repeatedly. Scheduling fields do **not** alter dependency rules; they only determine when a task becomes ready to run.
+
+**Schedule types**:
+- `once`: Execute at a single specified time.
+- `interval`: Execute every fixed number of seconds.
+- `cron`: Execute using a cron expression.
+- `daily`: Execute once per day at a specific time.
+- `weekly`: Execute on specific weekdays at a specific time.
+- `monthly`: Execute on specific dates each month.
+
+**Schedule expressions**:
+- `once`: ISO 8601 datetime (e.g., `2025-01-20T09:00:00Z`).
+- `interval`: Integer seconds as a string (e.g., `"3600"`).
+- `cron`: Standard 5-field cron (e.g., `"0 9 * * 1-5"`).
+- `daily`: `HH:MM` in 24-hour format (e.g., `"09:30"`).
+- `weekly`: `WEEKDAY@HH:MM` (e.g., `"mon,wed@09:30"`).
+- `monthly`: `DAY@HH:MM` (e.g., `"1,15@09:30"`).
+
+**Notes**:
+- `next_run_at` is calculated by the scheduler and is read-only for clients.
+- When `schedule_enabled` is `false`, scheduling fields MAY be present but are ignored.
+- Scheduling scope is hierarchical: if the **root task** has scheduling enabled, the schedule applies to the **entire task tree**. If only a **child task** has scheduling enabled, the schedule applies **only to that child task and its dependency chain**.
 
 ### JSON Schema Definition
 
@@ -188,6 +225,51 @@ These fields are not required by the protocol, but are recommended for database 
       "type": "boolean",
       "default": false,
       "description": "Whether this task is referenced/copied by others."
+    },
+    "schedule_type": {
+      "type": ["string", "null"],
+      "enum": ["once", "interval", "cron", "daily", "weekly", "monthly", null],
+      "description": "Scheduling mode for recurring execution."
+    },
+    "schedule_expression": {
+      "type": ["string", "null"],
+      "description": "Schedule expression (format depends on schedule_type)."
+    },
+    "schedule_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether scheduling is enabled for this task."
+    },
+    "schedule_start_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Earliest time the schedule can trigger (ISO 8601)."
+    },
+    "schedule_end_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Latest time the schedule can trigger (ISO 8601)."
+    },
+    "next_run_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Next scheduled execution time (computed)."
+    },
+    "last_run_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Last scheduled execution time (ISO 8601)."
+    },
+    "max_runs": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Maximum number of scheduled runs (null = unlimited)."
+    },
+    "run_count": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "Number of times this scheduled task has executed."
     }
   },
   "definitions": {
@@ -262,7 +344,16 @@ These fields are not required by the protocol, but are recommended for database 
   "completed_at": null,
   "origin_type": "copy",
   "original_task_id": "550e8400-e29b-41d4-a716-446655440003",
-  "has_references": false
+  "has_references": false,
+  "schedule_type": "weekly",
+  "schedule_expression": "mon,wed@09:30",
+  "schedule_enabled": true,
+  "schedule_start_at": "2025-01-20T00:00:00Z",
+  "schedule_end_at": null,
+  "next_run_at": "2025-01-22T09:30:00Z",
+  "last_run_at": null,
+  "max_runs": null,
+  "run_count": 0
 }
 ```
 
@@ -388,7 +479,16 @@ It is **critical** to distinguish between `inputs` and `schemas`:
   "created_at": "2025-01-15T10:30:00Z",
   "started_at": null,
   "updated_at": "2025-01-15T10:30:00Z",
-  "completed_at": null
+  "completed_at": null,
+  "schedule_type": "interval",
+  "schedule_expression": "3600",
+  "schedule_enabled": true,
+  "schedule_start_at": "2025-01-15T10:30:00Z",
+  "schedule_end_at": null,
+  "next_run_at": "2025-01-15T11:30:00Z",
+  "last_run_at": null,
+  "max_runs": null,
+  "run_count": 0
 }
 ```
 

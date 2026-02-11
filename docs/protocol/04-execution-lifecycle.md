@@ -168,6 +168,14 @@ stateDiagram-v2
 
 ## Execution Rules
 
+### Scheduling (Triggering Only)
+
+Scheduling **only** determines when tasks are triggered. It does **not** change dependency resolution, priority ordering, or state transition rules in this document.
+
+**Scope rule**:
+- If the **root task** has scheduling enabled, the schedule applies to the **entire task tree**.
+- If only a **child task** has scheduling enabled, the schedule applies **only to that child task and its dependency chain**.
+
 ### Priority Scheduling
 
 Tasks are executed based on their `priority` field. Lower values indicate higher priority.
